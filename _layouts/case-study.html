@@ -1,0 +1,39 @@
+---
+layout: default
+---
+{% assign studies = site.case_studies | sort: "order" %}
+{% for s in studies %}{% if s.url == page.url %}{% assign idx = forloop.index0 %}{% endif %}{% endfor %}
+
+<article class="case-study">
+  <nav class="breadcrumb"><a href="{{ '/case-studies/' | relative_url }}">← All case studies</a></nav>
+
+  <header class="cs-header">
+    <h1>{{ page.title }}</h1>
+    <p class="lede">{{ page.summary }}</p>
+  </header>
+
+  {% if page.hero %}
+  <img class="cs-hero" src="{{ page.hero | relative_url }}" alt="{{ page.hero_alt | default: page.title }}">
+  {% endif %}
+
+  <dl class="cs-meta">
+    {% if page.role %}<div><dt>Role</dt><dd>{{ page.role }}</dd></div>{% endif %}
+    {% if page.timeline %}<div><dt>Timeline</dt><dd>{{ page.timeline }}</dd></div>{% endif %}
+    {% if page.platforms %}<div><dt>Platforms</dt><dd>{{ page.platforms | join: ", " }}</dd></div>{% endif %}
+    {% if page.stack %}<div><dt>Stack</dt><dd>{{ page.stack | join: ", " }}</dd></div>{% endif %}
+  </dl>
+
+  <div class="prose">
+    {{ content }}
+  </div>
+
+  <nav class="cs-pager">
+    {% if idx > 0 %}{% assign prev_i = idx | minus: 1 %}{% assign prev = studies[prev_i] %}
+      <a class="prev" href="{{ prev.url | relative_url }}"><span>Previous</span>{{ prev.title }}</a>
+    {% else %}<span></span>{% endif %}
+    {% assign next_i = idx | plus: 1 %}
+    {% if next_i < studies.size %}{% assign next = studies[next_i] %}
+      <a class="next" href="{{ next.url | relative_url }}"><span>Next</span>{{ next.title }}</a>
+    {% endif %}
+  </nav>
+</article>

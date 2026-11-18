@@ -1,0 +1,13 @@
+---
+layout: default
+title: Case Studies
+description: Deep dives into how I designed, built, and shipped iOS features.
+---
+<header class="page-header">
+  <h1>Case Studies</h1>
+  <p class="lede">{{ page.description }}</p>
+</header>
+<div class="grid">
+  {% assign studies = site.case_studies | sort: "order" %}
+  {% for cs in studies %}{% include case-study-card.html study=cs %}{% endfor %}
+</div>

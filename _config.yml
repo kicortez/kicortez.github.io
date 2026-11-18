@@ -1,0 +1,35 @@
+title: Kim Cortez
+description: Senior iOS Engineer in Manila. 10+ years building native apps in Swift, SwiftUI and UIKit.
+url: "https://kicortez.github.io"
+baseurl: ""
+lang: en
+
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+sass:
+  style: compressed
+
+collections:
+  case_studies:
+    output: true
+    permalink: /case-studies/:name/
+
+defaults:
+  - scope: { path: "", type: case_studies }
+    values: { layout: case-study }
+  - scope: { path: "" }
+    values: { layout: default }
+
+plugins:
+  - jekyll-seo-tag
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - .bundle

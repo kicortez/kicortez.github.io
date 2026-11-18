@@ -1,0 +1,11 @@
+{%- comment -%}
+  Side-by-side phone screenshots.
+  Usage: {% include gallery.html images="/a.svg,/b.svg,/c.svg" caption="..." %}
+{%- endcomment -%}
+{% assign imgs = include.images | split: "," %}
+<figure class="gallery">
+  <div class="gallery-row">
+    {% for src in imgs %}<img src="{{ src | strip | relative_url }}" alt="Screenshot {{ forloop.index }}" loading="lazy">{% endfor %}
+  </div>
+  {% if include.caption %}<figcaption>{{ include.caption }}</figcaption>{% endif %}
+</figure>

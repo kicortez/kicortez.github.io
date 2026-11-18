@@ -1,0 +1,13 @@
+<header class="site-header">
+  <div class="container nav-wrap">
+    <a class="brand" href="{{ '/' | relative_url }}">{{ site.data.profile.name }}</a>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Toggle menu">
+    <label for="nav-toggle" class="nav-burger" aria-hidden="true"><span></span></label>
+    <nav class="site-nav">
+      <a href="{{ '/case-studies/' | relative_url }}"{% if page.url contains '/case-studies/' %} aria-current="page"{% endif %}>Case Studies</a>
+      <a href="{{ '/#experience' | relative_url }}">Experience</a>
+      <a href="{{ '/#contact' | relative_url }}">Get in touch</a>
+      <a class="nav-resume" href="{{ site.data.profile.resume | relative_url }}">Resume</a>
+    </nav>
+  </div>
+</header>

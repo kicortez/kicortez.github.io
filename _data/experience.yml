@@ -1,0 +1,31 @@
+# Condensed list (one line + one bullet per role) for the homepage. Full detail lives in the resume.
+# `case_study` is the slug of a file in _case_studies/ (optional).
+
+roles:
+  - title: Senior iOS Developer
+    company: RipeConcepts, Inc.
+    summary: "Modernized a multi-brand retail app: dependency injection over singletons, legacy UIKit screens rewritten in SwiftUI, and app-wide navigation moved to NavigationStack."
+    years: 2023–present
+    case_study: navigation-stack-migration
+    case_study_label: NavigationStack migration case study
+
+  - title: Senior Software Engineer (iOS)
+    company: Finstro
+    summary: "Built Apple Wallet in-app card provisioning with PassKit, and introduced SwiftUI and unit testing to a UIKit codebase."
+    years: 2022–23
+    case_study: apple-wallet-provisioning
+    case_study_label: Apple Wallet case study
+
+  - title: Senior iOS Developer (Contract)
+    company: Babel, Inc.
+    summary: "Built two AI consumer apps end to end, iface and m8, with on-device ML and a GCP backend."
+    years: 2020–22
+    case_study: on-device-ml-iface
+    case_study_label: On-device ML case study
+
+  - title: iOS Developer
+    company: RUSH Technologies
+    summary: "Re-architected the RUSH loyalty app so one codebase ships as a separately branded app for each merchant."
+    years: 2018–22
+    case_study: white-label-loyalty
+    case_study_label: White-label architecture case study

@@ -1,0 +1,13 @@
+{%- comment -%}
+  Grid of phone screenshots, each with its own caption.
+  Usage: {% include shots.html items=page.before_shots %}
+  Each item: { src: "/assets/...", caption: "..." }
+{%- endcomment -%}
+<div class="shots">
+  {% for shot in include.items %}
+  <figure class="shot">
+    <img src="{{ shot.src | relative_url }}" alt="{{ shot.alt | default: shot.caption }}" loading="lazy">
+    <figcaption>{{ shot.caption }}</figcaption>
+  </figure>
+  {% endfor %}
+</div>

@@ -1,0 +1,14 @@
+{% assign p = include.project %}
+<article class="card project-card">
+  <img class="app-icon" src="{{ p.icon | relative_url }}" alt="" width="64" height="64">
+  <div>
+    <h3>{{ p.name }}</h3>
+    <p>{{ p.summary }}</p>
+    <ul class="tags">{% for t in p.tech %}<li>{{ t }}</li>{% endfor %}</ul>
+    <p class="card-links">
+      {% if p.case_study %}<a href="{{ '/case-studies/' | append: p.case_study | append: '/' | relative_url }}">Read case study →</a>{% endif %}
+      {% if p.app_store %}<a href="{{ p.app_store }}">App Store ↗</a>{% endif %}
+      {% if p.repo %}<a href="{{ p.repo }}">Source ↗</a>{% endif %}
+    </p>
+  </div>
+</article>

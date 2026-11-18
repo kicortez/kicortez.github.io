@@ -1,0 +1,24 @@
+- name: Pulse
+  icon: /assets/images/icon-pulse.svg
+  summary: Workout tracker with live heart-rate zones, Apple Watch companion, and widgets.
+  tech: [SwiftUI, HealthKit, WatchKit]
+  app_store: https://apps.apple.com/
+  case_study: fitness-tracker-redesign
+
+- name: Ledger
+  icon: /assets/images/icon-ledger.svg
+  summary: Offline-first expense tracker that syncs flawlessly across flaky networks.
+  tech: [SwiftData, CloudKit, Swift Concurrency]
+  case_study: offline-sync-architecture
+
+- name: Nook
+  icon: /assets/images/icon-nook.svg
+  summary: Reading list app migrated from UIKit to SwiftUI, piece by piece.
+  tech: [SwiftUI, UIKit, Combine]
+  case_study: swiftui-migration
+
+- name: Tidy
+  icon: /assets/images/icon-tidy.svg
+  summary: Open-source SPM package for declarative form validation.
+  tech: [Swift Package, Result Builders]
+  repo: https://github.com/kicortez

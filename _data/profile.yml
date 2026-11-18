@@ -1,0 +1,22 @@
+name: Kim Cortez
+role: Senior iOS Engineer
+location: Manila, Philippines (UTC+8)
+availability: Open to remote roles and relocation.
+avatar: /assets/images/avatar.svg
+bio: >-
+  I like inheriting tangled codebases and leaving them easier to change, in
+  small reversible steps with tests landing alongside the refactor rather than
+  one big rewrite. I care about code the next person can read, test and delete
+  safely, which is why I lean on dependency injection, clear module boundaries
+  and boring names. I stay an IC because the work I do best, untangling
+  architecture and shipping the hard feature, happens in the editor, and I use
+  AI coding agents every day to spend more of my time there.
+resume: /assets/resume.pdf   # TODO: placeholder. Drop your PDF at assets/resume.pdf
+links:
+  - label: GitHub
+    url: https://github.com/kicortez
+  - label: LinkedIn
+    url: https://www.linkedin.com/in/kimislecortez/
+  - label: Email
+    url: mailto:kimislecortez@gmail.com
+tagline: "I modernize iOS codebases and ship the hard features: payments, navigation, on-device ML."
