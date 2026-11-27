@@ -173,6 +173,29 @@ main.container { padding-top: 48px; padding-bottom: 64px; }
   code { font-family: var(--mono); font-size: .88em; background: var(--code-bg); padding: 2px 6px; border-radius: 6px; }
   pre { background: var(--code-bg); padding: 16px 20px; border-radius: 12px; overflow-x: auto; line-height: 1.5; }
   pre code { background: none; padding: 0; font-size: .85rem; }
+
+  // Before/after labels sitting directly above a code block
+  .code-label {
+    margin: 1.5rem 0 -.25rem; font-size: .75rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: .08em; color: var(--muted);
+    &.before::before { content: "● "; color: #ff453a; }
+    &.after::before { content: "● "; color: #30d158; }
+  }
+
+  // At-a-glance stat tiles
+  .stats {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px;
+    margin: 1.5rem 0 2rem;
+    div { background: var(--bg-elev); border-radius: 12px; padding: 14px 16px; }
+    strong { display: block; font-size: 1.6rem; line-height: 1.1; letter-spacing: -0.02em; }
+    span { font-size: .85rem; color: var(--muted); }
+  }
+
+  // Decision record: one block per key decision
+  .decision {
+    border-left: 3px solid var(--accent); padding: 2px 0 2px 18px; margin: 2rem 0;
+    h3 { margin-bottom: .5rem; }
+  }
 }
 
 // Figures
