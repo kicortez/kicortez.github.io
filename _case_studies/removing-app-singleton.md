@@ -1,6 +1,6 @@
 ---
 title: Removing a singleton that wasn't one
-summary: Replacing 122 reads of a global AppContext.shared with explicit dependencies, and finding out the "singleton" had been handing some callers a throwaway instance all along.
+summary: Replacing reads of a global AppContext.shared with explicit dependencies, and finding out the "singleton" had been handing some callers a throwaway instance all along.
 hero: /assets/images/di-overhaul/hero.svg
 hero_alt: "Launch timeline: a placeholder AppContext exists until reset(loadData:) creates the configured one. Early reads of the placeholder are logged per call site. The configured context reaches screens through constructor injection in destination wrappers and long-lived services through configure(appContext:)."
 role: Senior iOS Developer · RipeConcepts, Inc.
@@ -13,21 +13,13 @@ featured: false
 
 <p class="muted"><em>Part 2 of 2. This builds on <a href="/case-studies/navigation-stack-migration/">Moving a retail app to NavigationStack</a>, whose destination wrappers became the place dependencies are injected from.</em></p>
 
-<div class="stats">
-  <div><strong>122 → 3</strong><span><code>AppContext.shared</code> reads in production code</span></div>
-  <div><strong>57 → 2</strong><span>files that touch the singleton</span></div>
-  <div><strong>10</strong><span>PRs over 7 weeks, each shippable alone</span></div>
-  <div><strong>5</strong><span>app-lifetime services moved to late binding</span></div>
-  <div><strong>1</strong><span>revert, then shipped properly</span></div>
-</div>
-
-**TL;DR.** The app had a global `AppContext.shared` that every layer reached into for its cart, lists, rewards and networking. Removing it looked like routine cleanup. It turned out the "singleton" was a placeholder created at launch and replaced once remote config loaded, so anything that read it too early had been holding a second, orphaned copy of app state. I moved the codebase to explicit dependencies in ten small PRs, instrumented the remaining reads in production before deciding what to do with them, and shipped, reverted and re-shipped the one change that got the initialization order wrong.
+**TL;DR.** The app had a global `AppContext.shared` that every layer reached into for its cart, lists, rewards and networking. Removing it looked like routine cleanup. It turned out the "singleton" was a placeholder created at launch and replaced once remote config loaded, so anything that read it too early had been holding a second, orphaned copy of app state. I moved the codebase to explicit dependencies in ten small PRs, instrumented the remaining reads in production before deciding what to do with them, and shipped, reverted and re-shipped the one change that got the initialization order wrong. It ends at three call sites I left in on purpose.
 
 *Code on this page is rewritten from the production source: names are simplified and business details removed. The structure and the decisions are real.*
 
 ## Context
 
-After the [NavigationStack migration](/case-studies/navigation-stack-migration/), every screen was built inside a small destination wrapper that received an `AppContext` from the environment. That gave the app a composition root for the first time, a single place where a screen gets its dependencies. But most of the code below that point ignored it and read `AppContext.shared` directly: 122 references across 57 files, in views, controllers, managers, networking, logging and analytics.
+After the [NavigationStack migration](/case-studies/navigation-stack-migration/), every screen was built inside a small destination wrapper that received an `AppContext` from the environment. That gave the app a composition root for the first time, a single place where a screen gets its dependencies. But most of the code below that point ignored it and read `AppContext.shared` directly, in views, controllers, managers, networking, logging and analytics.
 
 The stated goal was testability (you can't substitute a mock for something a view fetches from a global) and groundwork for Swift 6 strict concurrency, which rejects unprotected global mutable state. The project builds in Swift 5 mode with several Swift 6 upcoming features already on, so the global was one of the things standing between it and the switch.
 
@@ -64,7 +56,7 @@ A default argument that reads a global hides two things from the caller: that a 
 ## Constraints
 
 1. **Feature work didn't stop.** Two-week releases kept going, so every step had to be mergeable on its own, without a long-lived branch.
-2. **57 files, reviewable diffs.** Reviewers needed diffs they could actually read, so each PR covered one layer.
+2. **Reviewable diffs.** The change touched 57 files, so each PR covered one layer to keep it readable.
 3. **Some things really are app-lifetime.** Deep-link routing, push-notification handling and the login service exist before any screen does and are reached from the app delegate and system callbacks. They can't receive dependencies through a view's initializer.
 4. **The launch order was fixed.** Remote config has to load before the real context can be built, and that wasn't up for redesign.
 
@@ -308,7 +300,7 @@ The lesson I took from it: **a default argument on a lazily created shared objec
 
 ## Results
 
-- **122 → 3** `AppContext.shared` reads in production code, across 57 → 2 files. Most of the 11 remaining text matches are comments and the debug assert.
+- **Three call sites left, on purpose** (decision 4), each covered by the production logging. Everything else takes its dependencies explicitly.
 - **The original bug class is detectable.** Any read of the placeholder is reported from production, deduplicated per call site, and stale references held by long-lived services trip an assert in debug builds.
 - **Screens can be tested with mocks.** Views and controllers take their dependencies through `init`, so tests pass mocks (new ones for lists and coupon wallet) instead of mutating global state. About 48 test files were updated to construct their subjects explicitly.
 - **A duplicate cart refresh** in the add-rewards-membership flow was found and fixed along the way.

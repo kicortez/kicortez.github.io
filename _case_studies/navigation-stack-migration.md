@@ -17,9 +17,7 @@ featured: true
   <div><strong>36</strong><span>typed routes replace ad-hoc pushes</span></div>
   <div><strong>39 → 8</strong><span>direct UIKit push call sites</span></div>
   <div><strong>13 → 0</strong><span>deprecated <code>NavigationView</code>s</span></div>
-  <div><strong>122 → 3</strong><span><code>AppContext.shared</code> reads (with <a href="/case-studies/removing-app-singleton/">follow-up</a>)</span></div>
   <div><strong>44</strong><span>router unit tests</span></div>
-  <div><strong>178</strong><span>files in the main PR, +3.6k / −2.3k</span></div>
 </div>
 
 **TL;DR.** I designed and led the move of a large multi-brand shopping app from UIKit's `UINavigationController` to SwiftUI's `NavigationStack`. The core is a typed `Route` enum, one `NavigationPath` per tab owned by a single `AppRouter`, and a resolver layer that also became the seam for removing a global singleton. I wrote the base architecture and 96 of the 131 commits on the migration branch, and teammates moved their feature areas onto it in parallel. It shipped behind a normal release with no change to how users move through the app, which was the point.

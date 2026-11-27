@@ -55,5 +55,5 @@
 
   <rect class="box" x="60" y="440" width="1096" height="100" rx="16"/>
   <text class="lbl" x="84" y="478">AppContext.shared</text>
-  <text class="t" x="84" y="514">122 references in 57 files  →  3 deliberate call sites</text>
+  <text class="t" x="84" y="514">3 call sites left in on purpose, monitored in production</text>
 </svg>
