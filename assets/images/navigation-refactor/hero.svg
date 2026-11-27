@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="Every navigation entry point calls router.push(route, on: tab). AppRouter keeps one NavigationPath per tab. Each tab's TabNavigationStack resolves the route through RouteResolver into a destination wrapper, which injects dependencies into a SwiftUI view or a wrapped UIKit screen.">
+  <style>
+    .bg{fill:#8e8e93;opacity:.08}
+    .box{fill:none;stroke:#8e8e93;stroke-width:2.5}
+    .key{fill:none;stroke:#0071e3;stroke-width:3}
+    .keyfill{fill:#0071e3;opacity:.07}
+    .t{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",Helvetica,Arial,sans-serif;fill:#1d1d1f;font-size:24px;font-weight:600}
+    .s{font-family:ui-monospace,"SF Mono",Menlo,monospace;fill:#6e6e73;font-size:16px}
+    .lbl{font-family:-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif;fill:#6e6e73;font-size:15px;letter-spacing:.08em}
+    .kt{fill:#0071e3}
+    .arr{stroke:#8e8e93;stroke-width:2.5;fill:none}
+    .ah{fill:#8e8e93}
+    @media (prefers-color-scheme: dark){
+      .t{fill:#f5f5f7}.s,.lbl{fill:#98989d}
+      .key{stroke:#2997ff}.keyfill{fill:#2997ff;opacity:.12}.kt{fill:#2997ff}
+    }
+  </style>
+  <defs><marker id="h" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="ah" d="M0 0L10 5L0 10z"/></marker></defs>
+  <rect class="bg" width="1200" height="600" rx="24"/>
+
+  <text class="lbl" x="60" y="70">ENTRY POINTS</text>
+  <rect class="box" x="60" y="90" width="250" height="150" rx="16"/>
+  <text class="t" x="84" y="135">Taps &amp; buttons</text>
+  <text class="t" x="84" y="172">Deep links</text>
+  <text class="t" x="84" y="209">Push &amp; universal links</text>
+
+  <path class="arr" d="M318 165h76" marker-end="url(#h)"/>
+  <text class="s" x="322" y="150">push(_:on:)</text>
+
+  <text class="lbl" x="410" y="70">SINGLE SOURCE OF TRUTH</text>
+  <rect class="keyfill" x="410" y="90" width="380" height="150" rx="16"/>
+  <rect class="key" x="410" y="90" width="380" height="150" rx="16"/>
+  <text class="t kt" x="434" y="135">AppRouter</text>
+  <text class="s" x="434" y="172">paths:  [TabType: NavigationPath]</text>
+  <text class="s" x="434" y="202">routes: [TabType: [Route]]  // mirror</text>
+
+  <path class="arr" d="M798 165h76" marker-end="url(#h)"/>
+  <text class="s" x="800" y="150">path(for:)</text>
+
+  <text class="lbl" x="890" y="70">ONE STACK PER TAB</text>
+  <rect class="box" x="890" y="90" width="250" height="150" rx="16"/>
+  <text class="t" x="914" y="135">TabNavigationStack</text>
+  <text class="s" x="914" y="172">NavigationStack(path:)</text>
+  <text class="s" x="914" y="202">.environment(\.currentTab)</text>
+
+  <path class="arr" d="M1015 248v60H600v44" marker-end="url(#h)"/>
+  <text class="s" x="640" y="296">navigationDestination(for: Route.self)</text>
+
+  <text class="lbl" x="60" y="345">RESOLUTION</text>
+  <rect class="box" x="60" y="365" width="330" height="160" rx="16"/>
+  <text class="t" x="84" y="410">RouteResolver</text>
+  <text class="s" x="84" y="447">switch route { … }</text>
+  <text class="s" x="84" y="477">exhaustive · compile-checked</text>
+
+  <rect class="keyfill" x="435" y="365" width="330" height="160" rx="16"/>
+  <rect class="key" x="435" y="365" width="330" height="160" rx="16"/>
+  <text class="t kt" x="459" y="410">Destination wrapper</text>
+  <text class="s" x="459" y="447">owns @StateObject</text>
+  <text class="s" x="459" y="477">injects dependencies</text>
+
+  <rect class="box" x="810" y="365" width="330" height="160" rx="16"/>
+  <text class="t" x="834" y="410">Feature screen</text>
+  <text class="s" x="834" y="447">SwiftUI view, or</text>
+  <text class="s" x="834" y="477">UIKit via Representable</text>
+
+  <path class="arr" d="M398 445h29" marker-end="url(#h)"/>
+  <path class="arr" d="M773 445h29" marker-end="url(#h)"/>
+</svg>
