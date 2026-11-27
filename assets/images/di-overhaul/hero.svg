@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="At launch, a placeholder AppContext exists until reset(loadData:) creates the configured one after Remote Config loads. Reads that land on the placeholder are logged once per call site. The configured context reaches screens through constructor injection in destination wrappers, and reaches long-lived services through configure(appContext:).">
+  <style>
+    .bg{fill:#8e8e93;opacity:.08}
+    .box{fill:none;stroke:#8e8e93;stroke-width:2.5}
+    .warn{fill:none;stroke:#ff453a;stroke-width:2.5;stroke-dasharray:8 6}
+    .key{fill:none;stroke:#0071e3;stroke-width:3}
+    .keyfill{fill:#0071e3;opacity:.07}
+    .t{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",Helvetica,Arial,sans-serif;fill:#1d1d1f;font-size:24px;font-weight:600}
+    .s{font-family:ui-monospace,"SF Mono",Menlo,monospace;fill:#6e6e73;font-size:16px}
+    .lbl{font-family:-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif;fill:#6e6e73;font-size:15px;letter-spacing:.08em}
+    .kt{fill:#0071e3}
+    .wt{fill:#d70015}
+    .arr{stroke:#8e8e93;stroke-width:2.5;fill:none}
+    .ah{fill:#8e8e93}
+    @media (prefers-color-scheme: dark){
+      .t{fill:#f5f5f7}.s,.lbl{fill:#98989d}
+      .key{stroke:#2997ff}.keyfill{fill:#2997ff;opacity:.12}.kt{fill:#2997ff}
+      .wt{fill:#ff6961}
+    }
+  </style>
+  <defs><marker id="h" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="ah" d="M0 0L10 5L0 10z"/></marker></defs>
+  <rect class="bg" width="1200" height="600" rx="24"/>
+
+  <text class="lbl" x="60" y="80">AT LAUNCH</text>
+  <rect class="warn" x="60" y="100" width="290" height="150" rx="16"/>
+  <text class="t" x="84" y="145">Placeholder</text>
+  <text class="t" x="84" y="178">AppContext</text>
+  <text class="s" x="84" y="215">isConfigured = false</text>
+
+  <text class="s wt" x="60" y="290">early reads land here:</text>
+  <text class="s wt" x="60" y="314">logged once per call site</text>
+
+  <path class="arr" d="M358 175h92" marker-end="url(#h)"/>
+  <text class="s" x="362" y="160">reset(loadData:)</text>
+
+  <text class="lbl" x="466" y="80">AFTER REMOTE CONFIG</text>
+  <rect class="keyfill" x="466" y="100" width="300" height="150" rx="16"/>
+  <rect class="key" x="466" y="100" width="300" height="150" rx="16"/>
+  <text class="t kt" x="490" y="145">Configured</text>
+  <text class="t kt" x="490" y="178">AppContext</text>
+  <text class="s" x="490" y="215">created once, passed down</text>
+
+  <path class="arr" d="M774 150c40 0 40-40 76-40" marker-end="url(#h)"/>
+  <path class="arr" d="M774 200c40 0 40 120 76 120" marker-end="url(#h)"/>
+
+  <text class="lbl" x="866" y="60">SCREENS · CONSTRUCTOR INJECTION</text>
+  <rect class="box" x="866" y="76" width="290" height="110" rx="16"/>
+  <text class="t" x="890" y="118">Destination wrappers</text>
+  <text class="s" x="890" y="152">init(listsController:…)</text>
+
+  <text class="lbl" x="866" y="250">SERVICES · LATE BINDING</text>
+  <rect class="box" x="866" y="266" width="290" height="110" rx="16"/>
+  <text class="t" x="890" y="308">Long-lived managers</text>
+  <text class="s" x="890" y="342">configure(appContext:)</text>
+
+  <rect class="box" x="60" y="440" width="1096" height="100" rx="16"/>
+  <text class="lbl" x="84" y="478">AppContext.shared</text>
+  <text class="t" x="84" y="514">122 references in 57 files  →  3 deliberate call sites</text>
+</svg>
