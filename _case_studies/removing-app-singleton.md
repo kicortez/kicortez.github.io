@@ -3,7 +3,7 @@ title: Removing a singleton that wasn't one
 summary: Replacing 122 reads of a global AppContext.shared with explicit dependencies, and finding out the "singleton" had been handing some callers a throwaway instance all along.
 hero: /assets/images/di-overhaul/hero.svg
 hero_alt: "Launch timeline: a placeholder AppContext exists until reset(loadData:) creates the configured one. Early reads of the placeholder are logged per call site. The configured context reaches screens through constructor injection in destination wrappers and long-lived services through configure(appContext:)."
-role: Senior iOS Developer · RipeConcepts, Inc. · Sole developer
+role: Senior iOS Developer · RipeConcepts, Inc.
 timeline: 7 weeks · 2026
 platforms: [iOS 17+]
 stack: [Swift, SwiftUI, Dependency injection, Swift concurrency, XCTest]
@@ -64,7 +64,7 @@ A default argument that reads a global hides two things from the caller: that a 
 ## Constraints
 
 1. **Feature work didn't stop.** Two-week releases kept going, so every step had to be mergeable on its own, without a long-lived branch.
-2. **One developer, 57 files.** Reviewers needed diffs they could actually read, so each PR covered one layer.
+2. **57 files, reviewable diffs.** Reviewers needed diffs they could actually read, so each PR covered one layer.
 3. **Some things really are app-lifetime.** Deep-link routing, push-notification handling and the login service exist before any screen does and are reached from the app delegate and system callbacks. They can't receive dependencies through a view's initializer.
 4. **The launch order was fixed.** Remote config has to load before the real context can be built, and that wasn't up for redesign.
 
