@@ -11,11 +11,13 @@ order: 2
 featured: true
 ---
 
+<p class="muted"><em>Part 1 of 2. Continued in <a href="/case-studies/removing-app-singleton/">Removing a singleton that wasn't one</a>, which uses the destination wrappers below to remove a global singleton.</em></p>
+
 <div class="stats">
   <div><strong>36</strong><span>typed routes replace ad-hoc pushes</span></div>
   <div><strong>39 → 8</strong><span>direct UIKit push call sites</span></div>
   <div><strong>13 → 0</strong><span>deprecated <code>NavigationView</code>s</span></div>
-  <div><strong>127 → 11</strong><span><code>AppContext.shared</code> lookups (with follow-up)</span></div>
+  <div><strong>122 → 3</strong><span><code>AppContext.shared</code> reads (with <a href="/case-studies/removing-app-singleton/">follow-up</a>)</span></div>
   <div><strong>44</strong><span>router unit tests</span></div>
   <div><strong>178</strong><span>files in the main PR, +3.6k / −2.3k</span></div>
 </div>
@@ -71,7 +73,7 @@ The symptoms, in order of cost:
 - **Navigation state couldn't be inspected.** The only answer to "what is on this tab's stack?" was the view controller tree, so deep links had to cast their way through it. Cast against the wrong type and the link did nothing, silently.
 - **Construction and navigation were tangled.** About two dozen `UIViewController` extension helpers (`showHelp()`, `showOrderDetails()`, `showRewardsMembership()`, …) each built its own hosting controller and pulled dependencies from `AppContext.shared`. You couldn't unit-test any of them without a window.
 - **SwiftUI screens couldn't navigate natively.** A SwiftUI button had to reach back out through `DeepLinkManager.tabBarTopViewController?.navigationController`. Thirteen screens still used the deprecated `NavigationView`.
-- **The singleton was load-bearing.** `AppContext.shared` appeared 127 times in production code, much of it there because the navigation layer had no other way to hand a screen its dependencies.
+- **The singleton was load-bearing.** `AppContext.shared` appeared 122 times in production code, much of it there because the navigation layer had no other way to hand a screen its dependencies.
 
 ## Constraints
 
@@ -257,7 +259,7 @@ struct SearchDestination: View {
 }
 ```
 
-**Cost:** about 25 small boilerplate types. The upside I didn't fully plan for: this became the **composition root**. Each wrapper is the single place where a screen receives its dependencies, which let me run a follow-up that removed `AppContext.shared` from feature code (127 → 11 references) by threading explicit dependencies from the wrapper down, without touching navigation again.
+**Cost:** about 25 small boilerplate types. The upside I didn't fully plan for: this became the **composition root**. Each wrapper is the single place where a screen receives its dependencies, which let me run [a follow-up](/case-studies/removing-app-singleton/) that removed `AppContext.shared` from feature code (122 → 3 reads) by threading explicit dependencies from the wrapper down, without touching navigation again.
 
 </div>
 
@@ -359,7 +361,7 @@ Above that, every PR on the branch ran the unit suite and per-brand smoke UI tes
 - **One way to navigate.** `router.push(route, on: tab)` is the API for buttons, deep links, push notifications and the search bar alike. Direct UIKit push call sites went from 39 to 8, and the remaining ones are presentation edge cases.
 - **Deep links became readable and testable.** Duplicate-screen logic is pattern matching on values, not down-casting controllers.
 - **No `NavigationView` left** (13 → 0), and the custom swipe-back navigation controller was deleted.
-- **It unlocked dependency injection.** The destination layer became the composition root that the `AppContext.shared` removal (127 → 11) built on.
+- **It unlocked dependency injection.** The destination layer became the composition root that the [`AppContext.shared` removal](/case-studies/removing-app-singleton/) (122 → 3) built on.
 - **Built for a team.** Teammates migrated Home, Search, PDP sub-flows and Lists onto the architecture in parallel. After the initial walkthrough, the pattern (route case, wrapper, push) needed no further explanation.
 
 ## What I'd do differently
